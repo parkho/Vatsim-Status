@@ -2,7 +2,15 @@
 class VatsimStats extends CodonModule
 {
 	public function index() 
-	   {
+	   {	
+			$revision = trim(file_get_contents(CORE_PATH.'/version'));
+			if($revision != 'simpilot 5.5.2')
+				{
+					echo '<center>phpVMS Version Installed Is Not Compatible With This Module!</center><br />';
+					echo '<center>phpVMS Version Installed: '.$revision.'</center>';
+				}
+			else
+			{
 			$json = file_get_contents("https://stats.vatsim.net/user_count_json.php");
 			$data = json_decode($json, true); 
 			$pilots = $data['pilots'];
@@ -21,7 +29,7 @@ class VatsimStats extends CodonModule
 			
             $this->show('/vatstats/vatstas.php');
 			
-            
+            }
         }
 }
 ?>
